@@ -20,6 +20,8 @@ header{
         flex-direction: column;
         align-items: center;
         ul{
+            min-width: 50px;
+            min-height: 10px;
             display: flex;
             list-style: none;
             padding: 0;
@@ -28,7 +30,7 @@ header{
                 margin: 0 .5rem;
                 padding: 1rem;
                 background: $color-palette-primary;
-                border: 2px solid white;
+                border: 1px solid black;
                 border-radius: 25px;
                 cursor: pointer;
                 transition: .1s ease-in-out;

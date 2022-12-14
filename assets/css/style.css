@@ -28,6 +28,8 @@ header .list-container {
   align-items: center;
 }
 header .list-container ul {
+  min-width: 50px;
+  min-height: 10px;
   display: flex;
   list-style: none;
   padding: 0;
@@ -37,7 +39,7 @@ header .list-container ul li {
   margin: 0 0.5rem;
   padding: 1rem;
   background: rgb(0, 0, 0);
-  border: 2px solid white;
+  border: 1px solid black;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.1s ease-in-out;
