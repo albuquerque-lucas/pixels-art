@@ -22,14 +22,19 @@ header{
         ul{
             display: flex;
             list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
             li{
                 margin: 0 .5rem;
-                padding: .5rem;
-                background: red;
+                padding: 1rem;
+                background: $color-palette-primary;
                 border: 2px solid white;
                 border-radius: 25px;
+                cursor: pointer;
+                transition: .1s ease-in-out;
                 &:hover{
                     box-shadow: 0 0 2px white;
+                    transform:scale(1.075);
                 }
             }
             #color-1{

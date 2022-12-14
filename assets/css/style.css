@@ -30,16 +30,21 @@ header .list-container {
 header .list-container ul {
   display: flex;
   list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
 }
 header .list-container ul li {
   margin: 0 0.5rem;
-  padding: 0.5rem;
-  background: red;
+  padding: 1rem;
+  background: rgb(0, 0, 0);
   border: 2px solid white;
   border-radius: 25px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
 }
 header .list-container ul li:hover {
   box-shadow: 0 0 2px white;
+  transform: scale(1.075);
 }
 header .list-container ul #color-1 {
   background: rgb(0, 0, 0);
