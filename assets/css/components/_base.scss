@@ -1,0 +1,11 @@
+@import '../abstract/_variables.scss';
+
+*{
+    color: $color-font-primary;
+    font-family: $font-primary;
+}
+
+body{
+    background: $color-primary;
+
+}
