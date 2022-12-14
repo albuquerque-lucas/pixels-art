@@ -23,8 +23,6 @@ const generateColors = (button, target) => {
         target[2].style.backgroundColor = colorTwo;
         target[3].style.backgroundColor = colorThree;
 
-        console.log(localStorage);
-
     })
 
 }
