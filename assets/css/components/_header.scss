@@ -7,8 +7,12 @@ header{
     padding: 1rem .5rem 4rem;
     border-bottom: 2px solid white;
     border-radius: 15px;
+    transition: .1s  ease-out;
     h1{
         text-align: center;
+        &:hover{
+            text-shadow: 0 0 2px white;
+        }
     }
 
     .list-container{
@@ -18,13 +22,15 @@ header{
         ul{
             display: flex;
             list-style: none;
-    
             li{
                 margin: 0 .5rem;
                 padding: .5rem;
                 background: red;
                 border: 2px solid white;
                 border-radius: 25px;
+                &:hover{
+                    box-shadow: 0 0 2px white;
+                }
             }
             #color-1{
                 background: $color-palette-primary;

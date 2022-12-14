@@ -14,9 +14,13 @@ header {
   padding: 1rem 0.5rem 4rem;
   border-bottom: 2px solid white;
   border-radius: 15px;
+  transition: 0.1s ease-out;
 }
 header h1 {
   text-align: center;
+}
+header h1:hover {
+  text-shadow: 0 0 2px white;
 }
 header .list-container {
   display: flex;
@@ -33,6 +37,9 @@ header .list-container ul li {
   background: red;
   border: 2px solid white;
   border-radius: 25px;
+}
+header .list-container ul li:hover {
+  box-shadow: 0 0 2px white;
 }
 header .list-container ul #color-1 {
   background: rgb(0, 0, 0);
