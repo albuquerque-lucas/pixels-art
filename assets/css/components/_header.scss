@@ -8,6 +8,7 @@ header{
     border-bottom: 2px solid white;
     border-radius: 15px;
     transition: .1s  ease-out;
+
     h1{
         text-align: center;
         &:hover{
@@ -26,10 +27,10 @@ header{
             list-style: none;
             padding: 0;
             margin-bottom: 2rem;
-            li{
+            .color{
+                background-color: black;
                 margin: 0 .5rem;
                 padding: 1rem;
-                background: $color-palette-primary;
                 border: 1px solid black;
                 border-radius: 25px;
                 cursor: pointer;
@@ -38,9 +39,6 @@ header{
                     box-shadow: 0 0 2px white;
                     transform:scale(1.075);
                 }
-            }
-            #color-1{
-                background: $color-palette-primary;
             }
         }
     }

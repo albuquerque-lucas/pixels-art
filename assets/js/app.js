@@ -1,29 +1,62 @@
 window.onload = () => {
 
-    const btnGenerateColors = document.querySelector('#btn-colors');
-    const colorList = document.querySelectorAll('.list-container ul li');
-    generateColors(btnGenerateColors, colorList);
+    const btnGenerateColors = document.querySelector('#button-random-color');
+    const colorList = document.querySelectorAll('.color');
+    triggerPaletteButton(btnGenerateColors, colorList);
     fetchSavedColors(colorList);
 
 }
 
-const generateColors = (button, target) => {
+const triggerPaletteButton = (button, target) => {
 
     button.addEventListener('click', event => {
+        generateColors(target);
+    });
 
-        let colorOne = `rgb(${generateRGBNumber()})`;
-        let colorTwo = `rgb(${generateRGBNumber()})`;
-        let colorThree = `rgb(${generateRGBNumber()})`;
+}
 
+const generateColors = target => {
+
+
+        const colorZero = 'black';
+        const colorOne = `rgb(${generateRGBNumber()})`;
+        const colorTwo = `rgb(${generateRGBNumber()})`;
+        const colorThree = `rgb(${generateRGBNumber()})`;
+
+
+        if(colorZero == colorOne || colorZero == colorTwo || colorZero == colorThree){
+            generateColors();
+        }
+
+        if(colorOne == colorTwo || colorOne == colorThree){
+            generateColors();
+        }
+
+        if(colorTwo == colorThree){
+            generateColors();
+        }
+
+
+
+
+
+
+
+        const colorArray = [colorZero, colorOne, colorTwo, colorThree];
+
+        localStorage.setItem('colorGeneratedZero', colorZero);
         localStorage.setItem('colorGeneratedOne', colorOne);
         localStorage.setItem('colorGeneratedTwo', colorTwo);
         localStorage.setItem('colorGeneratedThree', colorThree);
 
-        target[1].style.backgroundColor = colorOne;
-        target[2].style.backgroundColor = colorTwo;
-        target[3].style.backgroundColor = colorThree;
 
-    })
+
+
+
+        for(let i = 0; i < target.length; i += 1){
+            target[i].style.backgroundColor = colorArray[i];
+        }
+
 
 }
 
@@ -39,13 +72,25 @@ const generateRGBNumber = () => {
 
 const fetchSavedColors = target => {
 
+    const colorZero = localStorage.getItem('colorGeneratedZedo');
     const colorOne = localStorage.getItem('colorGeneratedOne');
     const colorTwo = localStorage.getItem('colorGeneratedTwo');
     const colorThree = localStorage.getItem('colorGeneratedThree');
 
+    //const colorPalette = localStorage.getItem('colorPalette');
+    //const splitedPalette = colorPalette.split(',,,');
+
+    // for(let i = 0; i < target.length; i += 1 ){
+    //     target[i].style.backgroundColor = splitedPalette[i];
+    // }
+
+    target[0].style.backgroundColor = colorZero;
     target[1].style.backgroundColor = colorOne;
     target[2].style.backgroundColor = colorTwo;
     target[3].style.backgroundColor = colorThree;
+
+    // console.log(colorPalette);
+    // console.log(splitedPalette);
 
 
 }
