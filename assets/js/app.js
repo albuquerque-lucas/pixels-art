@@ -17,34 +17,14 @@ const triggerPaletteButton = (button, target) => {
 
 const generateColors = target => {
 
-
-        const colorZero = 'black';
         const colorOne = `rgb(${generateRGBNumber()})`;
         const colorTwo = `rgb(${generateRGBNumber()})`;
         const colorThree = `rgb(${generateRGBNumber()})`;
 
-
-        // if(colorZero == colorOne || colorZero == colorTwo || colorZero == colorThree){
-        //     generateColors();
-        // }
-
-        // if(colorOne == colorTwo || colorOne == colorThree){
-        //     generateColors();
-        // }
-
-        // if(colorTwo == colorThree){
-        //     generateColors();
-        // }
+        const colorArray = [colorOne, colorTwo, colorThree];
 
 
-
-
-
-
-
-        const colorArray = [colorZero, colorOne, colorTwo, colorThree];
-
-        localStorage.setItem('colorGeneratedZero', colorZero);
+        localStorage.setItem('colorPalette', colorArray);
         localStorage.setItem('colorGeneratedOne', colorOne);
         localStorage.setItem('colorGeneratedTwo', colorTwo);
         localStorage.setItem('colorGeneratedThree', colorThree);
@@ -52,8 +32,7 @@ const generateColors = target => {
 
 
 
-
-        for(let i = 0; i < target.length; i += 1){
+        for(let i = 1; i < target.length; i += 1){
             target[i].style.backgroundColor = colorArray[i];
         }
 
@@ -72,25 +51,13 @@ const generateRGBNumber = () => {
 
 const fetchSavedColors = target => {
 
-    const colorZero = localStorage.getItem('colorGeneratedZedo');
     const colorOne = localStorage.getItem('colorGeneratedOne');
     const colorTwo = localStorage.getItem('colorGeneratedTwo');
     const colorThree = localStorage.getItem('colorGeneratedThree');
 
-    //const colorPalette = localStorage.getItem('colorPalette');
-    //const splitedPalette = colorPalette.split(',,,');
-
-    // for(let i = 0; i < target.length; i += 1 ){
-    //     target[i].style.backgroundColor = splitedPalette[i];
-    // }
-
-    target[0].style.backgroundColor = colorZero;
     target[1].style.backgroundColor = colorOne;
     target[2].style.backgroundColor = colorTwo;
     target[3].style.backgroundColor = colorThree;
-
-    // console.log(colorPalette);
-    // console.log(splitedPalette);
 
 
 }
