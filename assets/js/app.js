@@ -24,17 +24,17 @@ const generateColors = target => {
         const colorThree = `rgb(${generateRGBNumber()})`;
 
 
-        if(colorZero == colorOne || colorZero == colorTwo || colorZero == colorThree){
-            generateColors();
-        }
+        // if(colorZero == colorOne || colorZero == colorTwo || colorZero == colorThree){
+        //     generateColors();
+        // }
 
-        if(colorOne == colorTwo || colorOne == colorThree){
-            generateColors();
-        }
+        // if(colorOne == colorTwo || colorOne == colorThree){
+        //     generateColors();
+        // }
 
-        if(colorTwo == colorThree){
-            generateColors();
-        }
+        // if(colorTwo == colorThree){
+        //     generateColors();
+        // }
 
 
 
