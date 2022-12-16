@@ -30,13 +30,9 @@ const generateColors = target => {
         localStorage.setItem('colorGeneratedThree', colorThree);
 
 
-
-
         for(let i = 1; i < target.length; i += 1){
-            target[i].style.backgroundColor = colorArray[i];
+            target[i].style.backgroundColor = colorArray[i - 1];
         }
-
-
 }
 
 const generateRGBNumber = () => {
@@ -55,9 +51,12 @@ const fetchSavedColors = target => {
     const colorTwo = localStorage.getItem('colorGeneratedTwo');
     const colorThree = localStorage.getItem('colorGeneratedThree');
 
+    const colorPalette = localStorage.getItem('colorPalette');
+
     target[1].style.backgroundColor = colorOne;
     target[2].style.backgroundColor = colorTwo;
     target[3].style.backgroundColor = colorThree;
 
+    console.log(colorPalette);
 
 }
