@@ -1,75 +1,67 @@
-window.onload = () => {
+const colorButton = document.querySelector('#button-random-color');
 
-    const btnGenerateColors = document.querySelector('#button-random-color');
-    const colorList = document.querySelectorAll('.color');
-    fetchSavedColors(colorList);
-    triggerPaletteButton(btnGenerateColors, colorList);
+fetchColors();
+generateBoard();
+triggerButton(colorButton);
 
+
+
+
+
+
+function triggerButton(button){
+    button.addEventListener('click', ()=>{
+        generateColors();
+        fetchColors();
+    })
+}
+
+
+function fetchColors (){
+
+    const div2 = document.getElementById('color-1');
+    const div3 = document.getElementById('color-2');
+    const div4 = document.getElementById('color-3');
+
+
+    div2.style.background = localStorage.getItem('colorOne');
+    div3.style.background = localStorage.getItem('colorTwo');
+    div4.style.background = localStorage.getItem('colorThree');
 
 }
 
-const triggerPaletteButton = (button, target) => {
 
-    button.addEventListener('click', event => {
-        event.preventDefault();
-        generateColors(target);
-    });
+function generateColors (){
+
+    const color1 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+    const color2 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+    const color3 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+
+
+    localStorage.setItem('colorPalette', [color1, color2, color3]);
+
+    localStorage.setItem('colorOne', color1);
+    localStorage.setItem('colorTwo', color2);
+    localStorage.setItem('colorThree', color3);
 
 }
 
-const generateColors = target => {
+function generateBoard(){
 
-        const colorZero = 'rgb(0, 0, 0)';
-        const colorOne = `rgb(${generateRGBNumber()})`;
-        const colorTwo = `rgb(${generateRGBNumber()})`;
-        const colorThree = `rgb(${generateRGBNumber()})`;
+    const board = document.getElementById('pixel-board');
 
-        const colorPalette = [colorZero, colorOne, colorTwo, colorThree];
-        const colorPalette2 = JSON.stringify(colorPalette);
+    for(let i = 0; i < 5; i += 1){
+        const line = document.createElement('div');
+        line.classList.add('line');
+        board.appendChild(line);
 
 
-        localStorage.setItem('colorPalette', colorPalette);
-        localStorage.setItem('colorGeneratedZero', colorZero);
-        localStorage.setItem('colorGeneratedOne', colorOne);
-        localStorage.setItem('colorGeneratedTwo', colorTwo);
-        localStorage.setItem('colorGeneratedThree', colorThree);
-
-        for(let i = 1; i < target.length; i += 1){
-            target[i].style.backgroundColor = colorPalette[i];
+        for(let i = 0; i < 5; i +=1){
+            const pixel = document.createElement('div');
+            pixel.classList.add('pixel');
+            line.appendChild(pixel);
         }
-}
-
-const generateRGBNumber = () => {
-
-    let colorIndexOne = Math.floor(Math.random() * 255);
-    let colorIndexTwo = Math.floor(Math.random() * 255);
-    let colorIndexThree = Math.floor(Math.random() * 255);
-
-    const rgbCode = `${colorIndexOne}, ${colorIndexTwo}, ${colorIndexThree}`;
-    const rgbCode2 = JSON.stringify(colorIndexOne, colorIndexTwo, colorIndexThree);
-
-    let stringifiedOne = JSON.stringify(colorIndexOne);
-    let stringifiedTwo = JSON.stringify(colorIndexTwo);
-    let stringifiedThree = JSON.stringify(colorIndexThree);
-
-    const final = `${stringifiedOne}, ${stringifiedTwo}, ${stringifiedThree}`;
-
-    return rgbCode;
-}
-
-const fetchSavedColors = target => {
-
-    const colorZero = localStorage.getItem('colorGeneratedZero');
-    const colorOne = localStorage.getItem('colorGeneratedOne');
-    const colorTwo = localStorage.getItem('colorGeneratedTwo');
-    const colorThree = localStorage.getItem('colorGeneratedThree');
-
-    const colorPalette = localStorage.getItem('colorPalette');
-
-    target[0].style.backgroundColor = colorZero;
-    target[1].style.backgroundColor = colorOne;
-    target[2].style.backgroundColor = colorTwo;
-    target[3].style.backgroundColor = colorThree;
-
+    }
 
 }
+

@@ -48,18 +48,6 @@ header .list-container ul .color:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.075);
 }
-header .list-container ul .color-1 {
-  background-color: black;
-}
-header .list-container ul .color-2 {
-  background-color: red;
-}
-header .list-container ul .color-3 {
-  background-color: blue;
-}
-header .list-container ul .color-4 {
-  background-color: aqua;
-}
 header button {
   padding: 0.75rem 2rem;
   background: rgb(44, 47, 51);
@@ -74,4 +62,36 @@ header button:hover {
   text-shadow: 0 0 2px white;
   border-radius: 15px;
   transform: scale(1.05, 1.05);
+}
+
+#color-0 {
+  background-color: rgb(0, 0, 0);
+}
+
+#color-1 {
+  background-color: green;
+}
+
+#color-2 {
+  background-color: blue;
+}
+
+#color-3 {
+  background-color: aqua;
+}
+
+#pixel-board {
+  margin: 3rem 1rem;
+}
+#pixel-board .line {
+  max-width: 210px;
+  background: white;
+  display: flex;
+  margin: 0 auto;
+}
+#pixel-board .pixel {
+  height: 40px;
+  width: 40px;
+  background: white;
+  border: 1px solid black;
 }/*# sourceMappingURL=style.css.map */
