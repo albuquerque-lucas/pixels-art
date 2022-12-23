@@ -1,10 +1,12 @@
 const colorButton = document.querySelector('#button-random-color');
+
 const colorList = document.querySelectorAll('.color');
 
 generateInitialColors(colorList);
 fetchColors();
 generateBoard();
 colorSelection();
+clearBoard();
 triggerButton(colorButton);
 
 
@@ -89,8 +91,6 @@ function colorSelection(){
     const palette = document.querySelectorAll('.color');
 
     let selectedColor = 'black';
-    let selectedItem;
-    let unselectedItem;
 
 
     palette[0].classList.add('selected');
@@ -100,20 +100,20 @@ function colorSelection(){
 
         palette[i].addEventListener('click', event => {
 
-            if(!palette[i].classList.contains('selected')){
+        if(!palette[i].classList.contains('selected')){
 
-                for(let j = 0; j < palette.length; j += 1){
-                    if(palette[j].classList.contains('selected')){
-                        palette[j].classList.remove('selected');
-                    }
+            for(let j = 0; j < palette.length; j += 1){
+                if(palette[j].classList.contains('selected')){
+                    palette[j].classList.remove('selected');
                 }
-
-                palette[i].classList.add('selected');
             }
 
-            selectedColor = palette[i].style.background;
-        })
-    }
+            palette[i].classList.add('selected');
+        }
+
+        selectedColor = palette[i].style.background;
+    })
+        }
 
 
 
@@ -127,6 +127,23 @@ function colorSelection(){
 
 
 
+
+}
+
+function clearBoard(){
+
+    const clearButton = document.querySelector('#clear-board');
+    const pixels = document.querySelectorAll('.pixel');
+    
+    clearButton.addEventListener('click', event => {
+
+        for(let i = 0; i < pixels.length; i += 1){
+
+            pixels[i].style.backgroundColor = 'white';
+
+        }
+
+    })
 
 }
 
