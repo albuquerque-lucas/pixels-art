@@ -87,35 +87,10 @@ function colorSelection(){
 
     const board = document.querySelectorAll('.pixel');
     const palette = document.querySelectorAll('.color');
-
     let selectedColor = 'black';
-    let selectedItem;
-    let unselectedItem;
-
-
     palette[0].classList.add('selected');
 
-    for(let i = 0; i < palette.length; i += 1){
-
-
-        palette[i].addEventListener('click', event => {
-
-            if(!palette[i].classList.contains('selected')){
-
-                for(let j = 0; j < palette.length; j += 1){
-                    if(palette[j].classList.contains('selected')){
-                        palette[j].classList.remove('selected');
-                    }
-                }
-
-                palette[i].classList.add('selected');
-            }
-
-            selectedColor = palette[i].style.background;
-            //console.log(event.target);
-        })
-    }
-
+    toggleSelected(palette, selectedColor);
 
 
     for(let i = 0; i < board.length; i += 1){
@@ -125,9 +100,25 @@ function colorSelection(){
         })
 
     }
+}
 
+function toggleSelected(colorArray, selectedColor){
 
+    for(let i = 0; i < colorArray.length; i += 1){
+        colorArray[i].addEventListener('click', event => {
 
+            if(!colorArray[i].classList.contains('selected')){
+
+                for(let j = 0; j < colorArray.length; j += 1){
+                    if(colorArray[j].classList.contains('selected')){
+                        colorArray[j].classList.remove('selected');
+                    }
+                }
+                colorArray[i].classList.add('selected');
+            }
+            selectedColor = colorArray[i].style.background;
+        })
+    }
 
 }
 
