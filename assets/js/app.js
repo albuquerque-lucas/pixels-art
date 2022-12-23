@@ -54,7 +54,7 @@ function triggerButton(button){
 
 function fetchColors (){
 
-    for(let i = 0; i < )
+
 
 }
 
