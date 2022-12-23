@@ -86,24 +86,33 @@ function generateBoard(){
 function colorSelection(){
 
     const board = document.querySelectorAll('.pixel');
-    const palette = document.getElementsByClassName('color');
+    const palette = document.querySelectorAll('.color');
 
-    let selected = 'black';
+    let selectedColor = 'black';
+    let selectedItem;
+    let unselectedItem;
 
-    console.log(palette[0])
+
+    palette[0].classList.add('selected');
 
     for(let i = 0; i < palette.length; i += 1){
 
 
-
-        if(!palette[i].classList.contains('selected')){
-            palette[0].classList.add('selected');
-        }
-
         palette[i].addEventListener('click', event => {
-            console.log(event.target);
-            selected = palette[i].style.background;
-            palette[i].classList.add('selected');
+
+            if(!palette[i].classList.contains('selected')){
+
+                for(let j = 0; j < palette.length; j += 1){
+                    if(palette[j].classList.contains('selected')){
+                        palette[j].classList.remove('selected');
+                    }
+                }
+
+                palette[i].classList.add('selected');
+            }
+
+            selectedColor = palette[i].style.background;
+            //console.log(event.target);
         })
     }
 
@@ -112,7 +121,7 @@ function colorSelection(){
     for(let i = 0; i < board.length; i += 1){
 
         board[i].addEventListener('click', event => {
-            event.target.style.background = selected;
+            event.target.style.background = selectedColor;
         })
 
     }

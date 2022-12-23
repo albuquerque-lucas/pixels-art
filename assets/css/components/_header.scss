@@ -29,7 +29,7 @@ header{
             margin-bottom: 2rem;
 
             .color{
-                background-color: black;
+                background-color: rgba(0, 0, 0, 0);
                 margin: 0 .5rem;
                 padding: 1rem;
                 border: 1px solid black;
@@ -65,7 +65,7 @@ header{
 }
 
 #color-0{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 #color-1{
     background-color: green;
