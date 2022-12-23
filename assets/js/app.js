@@ -2,8 +2,28 @@ const colorButton = document.querySelector('#button-random-color');
 
 const colorList = document.querySelectorAll('.color');
 
+const colorPaletteDiv = document.querySelector('#color-palette');
+
+const colorArray = ['black', 'red', 'green', 'blue'];
+
+for(let i = 0; i < 4; i += 1){
+
+    const colorPaletteItem = document.createElement('li');
+    colorPaletteItem.classList.add('color');
+    colorPaletteDiv.appendChild(colorPaletteItem);
+    console.log(colorPaletteItem[i]);
+
+}
+
+let dives = document.querySelectorAll('.color');
+
+for(let i = 0; i < 4; i += 1){
+    dives[i].style.backgroundColor = colorArray[i];
+}
+
+
 generateInitialColors(colorList);
-fetchColors();
+//fetchColors();
 generateBoard();
 colorSelection();
 clearBoard();
@@ -34,16 +54,7 @@ function triggerButton(button){
 
 function fetchColors (){
 
-    const div1 = document.getElementById('color-0');
-    const div2 = document.getElementById('color-1');
-    const div3 = document.getElementById('color-2');
-    const div4 = document.getElementById('color-3');
-
-
-    div1.style.background = localStorage.getItem('colorZero');
-    div2.style.background = localStorage.getItem('colorOne');
-    div3.style.background = localStorage.getItem('colorTwo');
-    div4.style.background = localStorage.getItem('colorThree');
+    for(let i = 0; i < )
 
 }
 
@@ -56,7 +67,7 @@ function generateColors (){
     const color3 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
 
 
-    localStorage.setItem('colorPalette', [color0, color1, color2, color3]);
+    localStorage.setItem('colorPalette', JSON.stringify([color0, color1, color2, color3]));
 
     localStorage.setItem('colorZero', color0);
     localStorage.setItem('colorOne', color1);
@@ -78,6 +89,7 @@ function generateBoard(){
         for(let i = 0; i < 5; i +=1){
             const pixel = document.createElement('div');
             pixel.classList.add('pixel');
+            pixel.style.backgroundColor = 'white';
             line.appendChild(pixel);
         }
     }
@@ -101,17 +113,15 @@ function colorSelection(){
         palette[i].addEventListener('click', event => {
 
         if(!palette[i].classList.contains('selected')){
-
             for(let j = 0; j < palette.length; j += 1){
                 if(palette[j].classList.contains('selected')){
                     palette[j].classList.remove('selected');
                 }
             }
-
             palette[i].classList.add('selected');
         }
 
-        selectedColor = palette[i].style.background;
+        selectedColor = palette[i].style.backgroundColor;
     })
         }
 
@@ -120,7 +130,7 @@ function colorSelection(){
     for(let i = 0; i < board.length; i += 1){
 
         board[i].addEventListener('click', event => {
-            event.target.style.background = selectedColor;
+            event.target.style.backgroundColor = selectedColor;
         })
 
     }
@@ -134,12 +144,19 @@ function clearBoard(){
 
     const clearButton = document.querySelector('#clear-board');
     const pixels = document.querySelectorAll('.pixel');
+    const lines = document.querySelectorAll('.line');
     
     clearButton.addEventListener('click', event => {
 
         for(let i = 0; i < pixels.length; i += 1){
 
             pixels[i].style.backgroundColor = 'white';
+
+        }
+
+        for(let i = 0; i < lines.length; i += 1){
+
+            lines[i].style.backgroundColor = 'white';
 
         }
 
