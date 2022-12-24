@@ -4,32 +4,40 @@ const colorList = document.querySelectorAll('.color');
 
 const colorPaletteDiv = document.querySelector('#color-palette');
 
-const colorArray = ['black', 'red', 'green', 'blue'];
-
-for(let i = 0; i < 4; i += 1){
-
-    const colorPaletteItem = document.createElement('li');
-    colorPaletteItem.classList.add('color');
-    colorPaletteDiv.appendChild(colorPaletteItem);
-    console.log(colorPaletteItem[i]);
-
-}
-
-let dives = document.querySelectorAll('.color');
-
-for(let i = 0; i < 4; i += 1){
-    dives[i].style.backgroundColor = colorArray[i];
-}
 
 
+
+
+
+createPalette(colorPaletteDiv);
 generateInitialColors(colorList);
-//fetchColors();
+fetchColors();
 generateBoard();
 colorSelection();
 clearBoard();
 triggerButton(colorButton);
 
+function createPalette(parent){
+    const colorArray = ['black', 'red', 'green', 'blue'];
 
+    for(let i = 0; i < 4; i += 1){
+    
+        const colorPaletteItem = document.createElement('li');
+        colorPaletteItem.classList.add('color');
+        parent.appendChild(colorPaletteItem);
+    
+    }
+    
+    let dives = document.querySelectorAll('.color');
+    
+    for(let i = 0; i < 4; i += 1){
+
+        dives[i].style.backgroundColor = colorArray[i];
+
+    }
+
+
+}
 
 
 function generateInitialColors(list){
@@ -54,25 +62,30 @@ function triggerButton(button){
 
 function fetchColors (){
 
+    let listOfPalette = document.querySelectorAll('.color');
+
+    for(let i = 0; i < listOfPalette.length; i += 1){
 
 
+        if(localStorage.getItem('colorPalette')){
+        let palette = JSON.parse(localStorage.getItem('colorPalette'));
+            listOfPalette[i].style.backgroundColor = palette[i].toString();
+        }
+
+
+    }
 }
 
 
 function generateColors (){
 
-    const color0 = 'rgb(0, 0, 0)';
-    const color1 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-    const color2 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-    const color3 = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+    const colorZero = 'rgb(0, 0, 0)';
+    const colorOne = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+    const colorTwo = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+    const colorThree = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
 
 
-    localStorage.setItem('colorPalette', JSON.stringify([color0, color1, color2, color3]));
-
-    localStorage.setItem('colorZero', color0);
-    localStorage.setItem('colorOne', color1);
-    localStorage.setItem('colorTwo', color2);
-    localStorage.setItem('colorThree', color3);
+    localStorage.setItem('colorPalette', JSON.stringify([colorZero, colorOne, colorTwo, colorThree]));
 
 }
 
