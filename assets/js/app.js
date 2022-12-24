@@ -1,93 +1,73 @@
-const colorButton = document.querySelector('#button-random-color');
 
-const colorList = document.querySelectorAll('.color');
-
-const colorPaletteDiv = document.querySelector('#color-palette');
-
-
-
-
-
-
-createPalette(colorPaletteDiv);
-generateInitialColors(colorList);
+createPalette();
+triggerColorButton();
 fetchColors();
 generateBoard();
 colorSelection();
 clearBoard();
-triggerButton(colorButton);
 
-function createPalette(parent){
+function createPalette(){
+    const colorPaletteDiv = document.querySelector('#color-palette');
     const colorArray = ['black', 'red', 'green', 'blue'];
+    const paletteLength = 4;
 
-    for(let i = 0; i < 4; i += 1){
-    
+    for(let i = 0; i < paletteLength; i += 1){
         const colorPaletteItem = document.createElement('li');
         colorPaletteItem.classList.add('color');
-        parent.appendChild(colorPaletteItem);
-    
+        colorPaletteDiv.appendChild(colorPaletteItem);
     }
     
-    let dives = document.querySelectorAll('.color');
-    
-    for(let i = 0; i < 4; i += 1){
-
-        dives[i].style.backgroundColor = colorArray[i];
-
+    const colorList = document.querySelectorAll('.color');
+    for(let i = 0; i < paletteLength; i += 1){
+        colorList[i].style.backgroundColor = colorArray[i];
     }
 
 
 }
 
-
-function generateInitialColors(list){
-
-    const initColors = ['rgb(0, 0, 0)', 'red', 'green', 'blue'];
-
-    for(let i = 0; i < list.length; i += 1){
-
-        list[i].style.backgroundColor = initColors[i];
-
-    }
-
-}
-
-function triggerButton(button){
-    button.addEventListener('click', ()=>{
+function triggerColorButton(){
+    const colorButton = document.querySelector('#button-random-color');
+    colorButton.addEventListener('click', ()=>{
         generateColors();
-        fetchColors();
     })
+}
+
+function generateColors (){
+    const paletteList = document.querySelectorAll('.color');
+    const paletteArray = [];
+
+    for(let i = 0; i < paletteList.length; i += 1){
+        if(i === 0){
+            paletteList[i].style.backgroundColor = 'black';
+        } else{
+            const randomRGBCode = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+            paletteList[i].style.backgroundColor = randomRGBCode;
+            paletteArray.push(randomRGBCode);
+            localStorage.setItem('colorPalette', JSON.stringify(paletteArray));
+        }
+    }
 }
 
 
 function fetchColors (){
 
-    let listOfPalette = document.querySelectorAll('.color');
+    const paletteList = document.querySelectorAll('.color');
+    const palette = JSON.parse(localStorage.getItem('colorPalette'));
+    const colorArray = ['black', 'red', 'green', 'blue'];
 
-    for(let i = 0; i < listOfPalette.length; i += 1){
+    if(palette !== null){
 
+        for(let i = 0; i < palette.length; i += 1){
 
-        if(localStorage.getItem('colorPalette')){
-        let palette = JSON.parse(localStorage.getItem('colorPalette'));
-            listOfPalette[i].style.backgroundColor = palette[i].toString();
+            paletteList[i + 1].style.backgroundColor = palette[i];
+
         }
-
 
     }
 }
 
 
-function generateColors (){
 
-    const colorZero = 'rgb(0, 0, 0)';
-    const colorOne = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-    const colorTwo = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-    const colorThree = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-
-
-    localStorage.setItem('colorPalette', JSON.stringify([colorZero, colorOne, colorTwo, colorThree]));
-
-}
 
 function generateBoard(){
 
