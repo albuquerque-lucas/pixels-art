@@ -1,4 +1,3 @@
-
 createPalette();
 triggerColorButton();
 fetchColors();
@@ -7,23 +6,44 @@ colorSelection();
 clearBoard();
 
 function createPalette(){
-    const colorPaletteDiv = document.querySelector('#color-palette');
-    const colorArray = ['black', 'red', 'green', 'blue'];
+    const colorPaletteContainer = document.querySelector('#color-palette');
+    const colorArray = ['red', 'green', 'blue'];
     const paletteLength = 4;
 
     for(let i = 0; i < paletteLength; i += 1){
         const colorPaletteItem = document.createElement('li');
         colorPaletteItem.classList.add('color');
-        colorPaletteDiv.appendChild(colorPaletteItem);
-    }
-    
-    const colorList = document.querySelectorAll('.color');
-    for(let i = 0; i < paletteLength; i += 1){
-        colorList[i].style.backgroundColor = colorArray[i];
+        colorPaletteContainer.appendChild(colorPaletteItem);
     }
 
+    if(localStorage.getItem('colorPalette') == null){
+        const colorList = document.querySelectorAll('.color');
+        localStorage.setItem('colorPalette', JSON.stringify(colorArray));
+        let recoveredPalette = JSON.parse(localStorage.getItem('colorPalette'));
 
+        for(let i = 0; i < paletteLength; i += 1){
+            if(i === 0){
+                colorList[i].style.backgroundColor = 'black';
+            } else{
+                colorList[i].style.backgroundColor = recoveredPalette[i];
+            }
+        }
+
+    } else {
+        const colorList = document.querySelectorAll('.color');
+        let recoveredPalette = JSON.parse(localStorage.getItem('colorPalette'));
+        console.log(recoveredPalette);
+
+        for(let i = 0; i < paletteLength; i += 1){
+            if(i === 0){
+                colorList[i].style.backgroundColor = 'black';
+            } else{
+                colorList[i].style.backgroundColor = recoveredPalette[i];
+            }
+    }
+    }
 }
+
 
 function triggerColorButton(){
     const colorButton = document.querySelector('#button-random-color');
@@ -48,26 +68,19 @@ function generateColors (){
     }
 }
 
-
 function fetchColors (){
 
     const paletteList = document.querySelectorAll('.color');
     const palette = JSON.parse(localStorage.getItem('colorPalette'));
-    const colorArray = ['black', 'red', 'green', 'blue'];
 
     if(palette !== null){
-
         for(let i = 0; i < palette.length; i += 1){
-
             paletteList[i + 1].style.backgroundColor = palette[i];
 
         }
 
     }
 }
-
-
-
 
 function generateBoard(){
 
@@ -88,7 +101,6 @@ function generateBoard(){
     }
 
 }
-
 
 function colorSelection(){
 
@@ -156,4 +168,3 @@ function clearBoard(){
     })
 
 }
-
