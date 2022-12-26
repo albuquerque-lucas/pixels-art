@@ -15,8 +15,10 @@ fetchColors();
 triggerColorButton();
 generateBoard();
 colorSelection();
-clearBoard();
 boardSize();
+clearBoard();
+
+
 
 function createPalette(){
 
@@ -194,52 +196,48 @@ function clearBoard(){
 
 }
 
-function fetchPixelBoard(){
+function boardSize(){
+    generateBoardBtn.addEventListener('click', event => {
 
-    const pixels = document.querySelectorAll('.pixel');
-    let pixelColorArray = [];
+        let parameter = input.value;
 
-    pixels.forEach(pixel => {
 
-        const color = pixel.style.backgroundColor;
 
-        pixel.addEventListener('click', event =>{
+        if(input.value === null || input.value === ''){
+            alert('Board inválido!');
+        } else if(input.value > 50){
+            parameter = 50;
+            newPixelBoard(parameter);
+        } else if(input.value < 5){
+            parameter = 5;
+            newPixelBoard(parameter);
+        } else{
+            newPixelBoard(parameter);
+        }
 
-        })
-
-        pixelColorArray.push(color);
-    })
+})
 
 }
 
-function boardSize(){
+function newPixelBoard(parametro){
+    pixelBoard.innerHTML = '';
 
+    for(let i = 0; i < parametro; i += 1){
+        const line = document.createElement('div');
+        line.classList.add('line');
+        pixelBoard.appendChild(line);
 
-
-    generateBoardBtn.addEventListener('click', event => {
-        if(input.value === null || input.value === ''){
-            alert('Board inválido!');
-    } else{
-        pixelBoard.innerHTML = '';
-        for(let i = 0; i < input.value; i += 1){
-            const line = document.createElement('div');
-            line.classList.add('line');
-            pixelBoard.appendChild(line);
-
-            for(let i = 0; i < input.value; i +=1){
-                const pixel = document.createElement('div');
-                pixel.classList.add('pixel');
-                line.appendChild(pixel);
-            }
+        for(let i = 0; i < parametro; i +=1){
+            const pixel = document.createElement('div');
+            pixel.classList.add('pixel');
+            line.appendChild(pixel);
         }
-
-
-        let pixels = document.querySelectorAll('.pixel');
-        pixels.forEach(pixel => {
-            pixel.style.backgroundColor = 'white';
-        })
-        colorSelection();
     }
-    })
 
+
+let pixels = document.querySelectorAll('.pixel');
+pixels.forEach(pixel => {
+    pixel.style.backgroundColor = 'white';
+})
+colorSelection();
 }
