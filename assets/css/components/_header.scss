@@ -16,6 +16,9 @@ header{
         }
     }
 
+
+
+
     .list-container{
         display: flex;
         flex-direction: column;
@@ -64,16 +67,58 @@ header{
     }
 }
 
-#color-0{
-    background-color: rgb(0, 0, 0);
-}
-#color-1{
-    background-color: rgb(0, 255, 0);
-}
-#color-2{
-    background-color: blue;
-}
-#color-3{
-    background-color: aqua;
-}
+//     #color-palette{
+//         display: flex;
+//         align-items: center;
+//         min-width: 50px;
+//         min-height: 10px;
+//         display: flex;
+//         list-style: none;
+//         padding: 0;
+//         margin-bottom: 2rem;
+//             .color{
+//                 margin: 0 .5rem;
+//                 padding: 1rem;
+//                 border: 1px solid black;
+//                 border-radius: 25px;
+//                 cursor: pointer;
+//                 transition: .1s ease-in-out;
+//                 &:hover{
+//                     box-shadow: 0 0 2px white;
+//                     transform:scale(1.075);
+//                 }
+//             }
 
+//         }
+
+
+
+//     #button-random-color{
+//         padding: .75rem 2rem;
+//         background: $color-secondary;
+//         border: 2px solid $color-font-primary;
+//         border-radius: 30px;
+//         transition: .1s ease-out;
+//         font-weight: 800;
+//         cursor: pointer;
+//         &:hover{
+//             background: $color-tertiary;
+//             text-shadow: 0 0 2px white;
+//             border-radius: 15px;
+//             transform: scale(1.05, 1.05);
+//         }
+//     }
+// }
+
+// #color-0{
+//     background-color: rgb(0, 0, 0);
+// }
+// #color-1{
+//     background-color: rgb(0, 255, 0);
+// }
+// #color-2{
+//     background-color: blue;
+// }
+// #color-3{
+//     background-color: aqua;
+// }
