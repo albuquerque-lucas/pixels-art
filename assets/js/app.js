@@ -93,6 +93,7 @@ function generateBoard(){
 
     const board = document.getElementById('pixel-board');
 
+    if(localStorage.getItem('boardSize') === null){
         for(let i = 0; i < 5; i += 1){
             const line = document.createElement('div');
             line.classList.add('line');
@@ -105,6 +106,23 @@ function generateBoard(){
                 line.appendChild(pixel);
             }
         }
+    } else{
+        let storedSize = localStorage.getItem('boardSize');
+        for(let i = 0; i < storedSize; i += 1){
+            const line = document.createElement('div');
+            line.classList.add('line');
+            board.appendChild(line);
+    
+    
+            for(let i = 0; i < storedSize; i +=1){
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                line.appendChild(pixel);
+            }
+        }
+    }
+
+
 
         const pixel = document.querySelectorAll('.pixel');
 
@@ -114,9 +132,13 @@ function generateBoard(){
                 pixel[i].style.backgroundColor = 'white';
 
             } else{
-
                 const storedPalette = JSON.parse(localStorage.getItem('pixelBoard'));
-                pixel[i].style.backgroundColor = storedPalette[i];
+                if(storedPalette[i] === null){
+                    pixel[i].style.backgroundColor = 'white';
+                } else{
+                    pixel[i].style.backgroundColor = storedPalette[i];
+                }
+
             }
         }
 
@@ -201,8 +223,6 @@ function boardSize(){
 
         let parameter = input.value;
 
-
-
         if(input.value === null || input.value === ''){
             alert('Board inválido!');
         } else if(input.value > 50){
@@ -236,8 +256,21 @@ function newPixelBoard(parametro){
 
 
 let pixels = document.querySelectorAll('.pixel');
-pixels.forEach(pixel => {
-    pixel.style.backgroundColor = 'white';
-})
+
+
+for(let i = 0; i < pixels.length; i += 1){
+
+    pixels[i].style.backgroundColor = 'white';
+
+
+}
+
+// pixels.forEach(pixel => {
+//         pixel.style.backgroundColor = 'white';
+    
+
+// })
+
+localStorage.setItem('boardSize', parametro);
 colorSelection();
 }
