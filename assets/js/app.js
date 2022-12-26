@@ -1,30 +1,13 @@
 const colorPaletteContainer = document.querySelector('#color-palette');
+const pixelBoard = document.querySelector('#pixel-board');
+const generateBoardBtn = document.querySelector('#generate-board');
 const paletteLength = 4;
-
+const input = document.querySelector('#board-size');
 for(let i = 0; i < 4; i += 1){
     const colorPaletteItem = document.createElement('li');
     colorPaletteItem.classList.add('color');
     colorPaletteContainer.appendChild(colorPaletteItem);
 }
-
-// window.onload = () => {
-//     const pixels = document.querySelectorAll('.pixel');
-//     const storedPixels = JSON.parse(localStorage.getItem('pixelBoard'));
-    
-//     for(let i = 0; i < pixels.length; i += 1){
-
-//         if(localStorage.getItem('pixelBoard') === null){
-//             generateBoard();
-//             break;
-//         } else{
-//             //pixels[i].style.backgroundColor = storedPixels[i];
-//             console.log('oi');
-//         }
-
-
-
-//     }
-// }
 
 
 createPalette();
@@ -33,6 +16,7 @@ triggerColorButton();
 generateBoard();
 colorSelection();
 clearBoard();
+boardSize();
 
 function createPalette(){
 
@@ -44,19 +28,17 @@ function createPalette(){
 
     if(localStorage.getItem('colorPalette') === null){
         localStorage.setItem('colorPalette', JSON.stringify(colorArray));
-        let recoveredPalette = JSON.parse(localStorage.getItem('colorPalette'));
+        let storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
 
         for(let i = 0; i < paletteLength; i += 1){
-                colorList[i].style.backgroundColor = recoveredPalette[i];
+                colorList[i].style.backgroundColor = storedPalette[i];
                 secondArray.push(colorList[i].style.backgroundColor)
         }
 
     } else {
-        let recoveredPalette = JSON.parse(localStorage.getItem('colorPalette'));
-        //console.log(recoveredPalette);
-
+        let storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
         for(let i = 0; i < paletteLength; i += 1){
-                colorList[i].style.backgroundColor = recoveredPalette[i];
+                colorList[i].style.backgroundColor = storedPalette[i];
     }
     }
 }
@@ -103,9 +85,6 @@ function fetchColors (){
     for(let i = 0; i < palette.length; i += 1){
         paletteList[i].style.backgroundColor = palette[i];
     }
-
-
-    console.log(palette);
 }
 
 function generateBoard(){
@@ -126,7 +105,6 @@ function generateBoard(){
         }
 
         const pixel = document.querySelectorAll('.pixel');
-        console.log(pixel);
 
         for(let i = 0; i < pixel.length; i += 1){
             if(localStorage.getItem('pixelBoard') === null){
@@ -202,18 +180,15 @@ function clearBoard(){
     const lines = document.querySelectorAll('.line');
     
     clearButton.addEventListener('click', event => {
-
         for(let i = 0; i < pixels.length; i += 1){
-
             pixels[i].style.backgroundColor = 'white';
-
         }
 
         for(let i = 0; i < lines.length; i += 1){
-
             lines[i].style.backgroundColor = 'white';
-
         }
+
+        localStorage.removeItem('pixelBoard');
 
     })
 
@@ -233,6 +208,38 @@ function fetchPixelBoard(){
         })
 
         pixelColorArray.push(color);
+    })
+
+}
+
+function boardSize(){
+
+
+
+    generateBoardBtn.addEventListener('click', event => {
+        if(input.value === null || input.value === ''){
+            alert('Board inválido!');
+    } else{
+        pixelBoard.innerHTML = '';
+        for(let i = 0; i < input.value; i += 1){
+            const line = document.createElement('div');
+            line.classList.add('line');
+            pixelBoard.appendChild(line);
+
+            for(let i = 0; i < input.value; i +=1){
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                line.appendChild(pixel);
+            }
+        }
+
+
+        let pixels = document.querySelectorAll('.pixel');
+        pixels.forEach(pixel => {
+            pixel.style.backgroundColor = 'white';
+        })
+        colorSelection();
+    }
     })
 
 }

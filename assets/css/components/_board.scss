@@ -1,20 +1,25 @@
 @import '../abstract/_variables.scss';
 
+main{
+    display: flex;
+    justify-content: center;
 
-#pixel-board{
-    margin: 3rem 1rem;
-
-
-    .line{
-        max-width: 210px;
-        display: flex;
-        margin: 0 auto;
+    #pixel-board{
+        margin: 3rem 0;
+    
+    
+        .line{
+            display: flex;
+            margin: 0 auto;
+        }
+    
+        .pixel{
+            height: 40px;
+            min-width: 39px;
+            width: 40px;
+            border: 1px solid black;
+        }
+    
     }
-
-    .pixel{
-        height: 40px;
-        width: 40px;
-        border: 1px solid black;
-    }
-
 }
+

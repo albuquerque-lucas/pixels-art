@@ -48,7 +48,12 @@ header .list-container ul .color:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.075);
 }
-header button {
+header #input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header #input-section button {
   padding: 0.75rem 2rem;
   background: rgb(44, 47, 51);
   border: 2px solid rgb(255, 255, 255);
@@ -57,23 +62,38 @@ header button {
   font-weight: 800;
   cursor: pointer;
 }
-header button:hover {
+header #input-section button:hover {
   background: rgb(85, 108, 190);
   text-shadow: 0 0 2px white;
   border-radius: 15px;
   transform: scale(1.05, 1.05);
 }
-
-#pixel-board {
-  margin: 3rem 1rem;
+header #input-section #input-container {
+  margin-top: 1rem;
 }
-#pixel-board .line {
-  max-width: 210px;
+header #input-section #input-container #board-size {
+  border: none;
+  max-width: 100px;
+  height: 2.5rem;
+  border-radius: 5px;
+  color: black;
+  font-size: 1.5rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+main #pixel-board {
+  margin: 3rem 0;
+}
+main #pixel-board .line {
   display: flex;
   margin: 0 auto;
 }
-#pixel-board .pixel {
+main #pixel-board .pixel {
   height: 40px;
+  min-width: 39px;
   width: 40px;
   border: 1px solid black;
 }/*# sourceMappingURL=style.css.map */
