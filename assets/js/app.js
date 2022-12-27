@@ -1,7 +1,7 @@
 const colorPaletteContainer = document.querySelector('#color-palette');
 const pixelBoard = document.querySelector('#pixel-board');
 const generateBoardBtn = document.querySelector('#generate-board');
-const paletteLength = 4;
+
 const input = document.querySelector('#board-size');
 for(let i = 0; i < 4; i += 1){
     const colorPaletteItem = document.createElement('li');
@@ -24,9 +24,8 @@ function createPalette(){
 
     const colorArray = ['black', 'red', 'green', 'blue'];
     const secondArray = [];
-
+    const paletteLength = 4;
     const colorList = document.querySelectorAll('.color');
-    //console.log(colorList);
 
     if(localStorage.getItem('colorPalette') === null){
         localStorage.setItem('colorPalette', JSON.stringify(colorArray));
@@ -39,9 +38,12 @@ function createPalette(){
 
     } else {
         let storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
+        let finalArray = [];
         for(let i = 0; i < paletteLength; i += 1){
                 colorList[i].style.backgroundColor = storedPalette[i];
-    }
+                finalArray.push(colorList[i].style.backgroundColor);
+        }
+        localStorage.setItem('colorPallete', JSON.stringify(finalArray));
     }
 }
 
@@ -256,10 +258,7 @@ function newPixelBoard(parametro){
 
 
 let pixels = document.querySelectorAll('.pixel');
-
-
 for(let i = 0; i < pixels.length; i += 1){
-
     if(localStorage.getItem('pixelBoard') === null){
         pixels[i].style.backgroundColor = 'white';
     } else{
