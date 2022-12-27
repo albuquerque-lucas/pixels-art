@@ -1,8 +1,15 @@
+const colorPalette = document.querySelector('#color-palette');
+const buttonRandomColor = document.querySelector('#button-random-color');
+const pixelBoard = document.querySelector('#pixel-board');
+const boardSize = document.querySelector('#board-size');
+const buttonGenerateBoard = document.querySelector('#generate-board');
+
+
 window.onload = () => {
 
-    iluminatePalette(createPalette(colorPalette, 4));
+    createPalette(colorPalette, 7);
     createPixelBoard(pixelBoard, 5);
-    
+
     buttonRandomColor.addEventListener('click', event => {
         const colors = document.querySelectorAll('.color');
         const colorArray = [];
@@ -10,7 +17,7 @@ window.onload = () => {
         for(let i = 0; i < colors.length; i += 1){
 
             if(i === 0){
-                colors[i].style.backgroundColor = 'rgb(0, 0, 0)';
+                colors[i].style.backgroundColor = 'black';
                 colorArray.push(colors[i].style.backgroundColor);
                 console.log(colorArray);
             } else{
@@ -45,17 +52,15 @@ window.onload = () => {
 
 
     })
-
-
 }
 
-const colorPalette = document.querySelector('#color-palette');
-const buttonRandomColor = document.querySelector('#button-random-color');
-const pixelBoard = document.querySelector('#pixel-board');
-const boardSize = document.querySelector('#board-size');
-const buttonGenerateBoard = document.querySelector('#generate-board');
+
 
 const createPalette = (palette, length) => {
+
+    if(localStorage.getItem('sizePalette') !== null){
+        let sizePalette = localStorage.getItem('sizePalette');
+    }
 
     for(let i = 0; i < length; i += 1){
         const item = document.createElement('li');
@@ -63,19 +68,19 @@ const createPalette = (palette, length) => {
         palette.appendChild(item);
     }
 
+    localStorage.setItem('sizePalette', length);
     const colors = document.querySelectorAll('.color');
-
-    return colors;
-
+    
+    iluminatePalette(colors);
     }
 
 
 
 const iluminatePalette = (paletteItems) => {
 
+    const storedLength = parseInt(localStorage.getItem('sizePalette'));
     const initColors = ['black', 'red', 'green', 'blue'];
     const colorArray = [];
-
     for(let i = 0; i < paletteItems.length; i += 1){
         if(localStorage.getItem('colorPalette') === null){
             if(i < 4){
@@ -87,25 +92,34 @@ const iluminatePalette = (paletteItems) => {
                 paletteItems[i].style.backgroundColor = randomRGBCode;
                 colorArray.push(paletteItems[i].style.backgroundColor);
             }
-            console.log(colorArray);
         } else {
             if(i === 0){
                 paletteItems[i].style.backgroundColor = 'black';
                 colorArray.push(paletteItems[i].style.backgroundColor);
             } else{
                 const storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
-                paletteItems[i].style.backgroundColor = storedPalette[i];
-                colorArray.push(paletteItems[i].style.backgroundColor);
+                const reference = storedLength - 1;
+                if(i < reference){
+                    console.log(i, reference)
+                    const storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
+                    paletteItems[i].style.backgroundColor = storedPalette[i];
+                    colorArray.push(storedPalette[i]);
+                } else{
+                    const randomRGBCode = `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`;
+                    paletteItems[i].style.backgroundColor = randomRGBCode;
+                    colorArray.push(paletteItems[i].style.backgroundColor);
+                }
+
+
+                }
             }
         }
-        
+        console.log(colorArray);
+        localStorage.setItem('colorPalette', JSON.stringify(colorArray));
+
+        return colorArray;
 
     }
-    localStorage.setItem('colorPalette', JSON.stringify(colorArray));
-
-    return colorArray;
-
-}
 
 const createPixelBoard = (container, number) => {
 
@@ -123,6 +137,12 @@ const createPixelBoard = (container, number) => {
             }
         }
     }
+
+
+}
+
+const paintPixels = () => {
+
 
 
 }
