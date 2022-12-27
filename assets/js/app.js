@@ -1,277 +1,235 @@
-const colorPaletteContainer = document.querySelector('#color-palette');
+const colorPalette = document.querySelector('#color-palette');
+const buttonRandomColor = document.querySelector('#button-random-color');
 const pixelBoard = document.querySelector('#pixel-board');
-const generateBoardBtn = document.querySelector('#generate-board');
-
-const input = document.querySelector('#board-size');
-for(let i = 0; i < 4; i += 1){
-    const colorPaletteItem = document.createElement('li');
-    colorPaletteItem.classList.add('color');
-    colorPaletteContainer.appendChild(colorPaletteItem);
-}
+const boardSize = document.querySelector('#board-size');
+const buttonGenerateBoard = document.querySelector('#generate-board');
+const buttonClearBoard = document.querySelector('#clear-board');
 
 
-createPalette();
-fetchColors();
-triggerColorButton();
-createBoard();
-colorSelection();
-boardSize();
-clearBoard();
+window.onload = () => {
 
+    createPalette(colorPalette, 4);
+    createPixelBoard(pixelBoard, 5);
+    paintPixelBoard();
+    recoverPainting();
 
+    buttonRandomColor.addEventListener('click', event => {
+        const colors = document.querySelectorAll('.color');
+        const colorArray = [];
+        for(let i = 0; i < colors.length; i += 1){
+            if(i === 0){
+                colors[i].style.backgroundColor = 'black';
+                colorArray.push(colors[i].style.backgroundColor);
+            } else{
+                const randomRGBCode = `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`;
 
-function createPalette(){
+                colors[i].style.backgroundColor = randomRGBCode;
+                colorArray.push(colors[i].style.backgroundColor);
+            }
 
-    const colorArray = ['black', 'red', 'green', 'blue'];
-    const secondArray = [];
-    const paletteLength = 4;
-    const colorList = document.querySelectorAll('.color');
-
-    if(localStorage.getItem('colorPalette') === null){
+        }
         localStorage.setItem('colorPalette', JSON.stringify(colorArray));
-        let storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
+    })
 
-        for(let i = 0; i < paletteLength; i += 1){
-                colorList[i].style.backgroundColor = storedPalette[i];
-                secondArray.push(colorList[i].style.backgroundColor)
+    buttonGenerateBoard.addEventListener('click', event => {
+        limit = boardSize.value;
+        if(limit === null || limit === ''){
+            alert('Board inválido!');
+        } else if(limit < 5){
+            pixelBoard.innerHTML = '';
+            limit = 5;
+            createPixelBoard(pixelBoard, limit);
+            localStorage.setItem('boardSize', limit);
+        } else if(limit > 50){
+            pixelBoard.innerHTML = '';
+            limit = 50;
+            createPixelBoard(pixelBoard, limit);
+            localStorage.setItem('boardSize', limit);
+        } else{
+            pixelBoard.innerHTML = '';
+            createPixelBoard(pixelBoard, limit);
+            localStorage.setItem('boardSize', limit);
         }
 
-    } else {
-        let storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
-        let finalArray = [];
-        for(let i = 0; i < paletteLength; i += 1){
-                colorList[i].style.backgroundColor = storedPalette[i];
-                finalArray.push(colorList[i].style.backgroundColor);
-        }
-        localStorage.setItem('colorPallete', JSON.stringify(finalArray));
-    }
-}
 
-
-function triggerColorButton(){
-    const colorButton = document.querySelector('#button-random-color');
-    colorButton.addEventListener('click', ()=>{
-        fetchColors();
-        generateColors();
     })
 }
 
-function generateColors (){
-
-    const paletteList = document.querySelectorAll('.color');
-    const paletteArray = [];
-
-    for(let i = 0; i < paletteList.length; i += 1){
-
-        if(i === 0){
-            paletteList[i].style.backgroundColor = 'black';
-            paletteArray.push(paletteList[i].style.backgroundColor);
-
-        } else{
-
-            const randomRGBCode = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-
-            paletteList[i].style.backgroundColor = randomRGBCode;
-            paletteArray.push(randomRGBCode);
 
 
+const createPalette = (palette, length) => {
+
+    for(let i = 0; i < length; i += 1){
+        const item = document.createElement('li');
+        item.classList.add('color');
+        palette.appendChild(item);
+    }
+    localStorage.setItem('sizePalette', length);
+    const colors = document.querySelectorAll('.color');
+    
+    illuminatePalette(colors);
+    selectColorFromPalette();
+    }
+
+
+
+const illuminatePalette = (paletteItems) => {
+
+    const storedLength = parseInt(localStorage.getItem('sizePalette'));
+    const initColors = ['black', 'red', 'green', 'blue'];
+    const colorArray = [];
+
+    for(let i = 0; i < paletteItems.length; i += 1){
+        paletteItems[0].classList.add('selected');
+        if(localStorage.getItem('colorPalette') === null){
+            if(i < 4){
+                paletteItems[i].style.backgroundColor = initColors[i];
+                colorArray.push(paletteItems[i].style.backgroundColor);
+            } else{
+                const randomRGBCode = `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`;
+
+                paletteItems[i].style.backgroundColor = randomRGBCode;
+                colorArray.push(paletteItems[i].style.backgroundColor);
+            }
+        } else {
+            if(i === 0){
+                paletteItems[i].style.backgroundColor = 'black';
+                colorArray.push(paletteItems[i].style.backgroundColor);
+            } else{
+                const reference = storedLength - 1;
+                if(i <= reference){
+                    const storedPalette = JSON.parse(localStorage.getItem('colorPalette'));
+                    paletteItems[i].style.backgroundColor = storedPalette[i];
+                    colorArray.push(storedPalette[i]);
+                } else{
+                    const randomRGBCode = `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`;
+                    paletteItems[i].style.backgroundColor = randomRGBCode;
+                    colorArray.push(paletteItems[i].style.backgroundColor);
+                }
+
+
+                }
+            }
         }
+        localStorage.setItem('colorPalette', JSON.stringify(colorArray));
+
+        return colorArray;
     }
 
-    localStorage.setItem('colorPalette', JSON.stringify(paletteArray));
-}
-
-function fetchColors (){
-
-    const paletteList = document.querySelectorAll('.color');
-    const palette = JSON.parse(localStorage.getItem('colorPalette'));
-
-    for(let i = 0; i < palette.length; i += 1){
-        paletteList[i].style.backgroundColor = palette[i];
-    }
-}
-
-function createBoard(){
-
-    const board = document.getElementById('pixel-board');
+const createPixelBoard = (container, number) => {
 
     if(localStorage.getItem('boardSize') === null){
-        for(let i = 0; i < 5; i += 1){
+        for(let i = 0; i < number; i += 1){
             const line = document.createElement('div');
             line.classList.add('line');
-            board.appendChild(line);
+            container.appendChild(line);
     
-    
-            for(let i = 0; i < 5; i +=1){
+            for(let i = 0; i < number; i +=1){
                 const pixel = document.createElement('div');
                 pixel.classList.add('pixel');
+                pixel.style.backgroundColor = 'white';
                 line.appendChild(pixel);
             }
         }
     } else{
-        let storedSize = localStorage.getItem('boardSize');
-        for(let i = 0; i < storedSize; i += 1){
+        
+        number = localStorage.getItem('boardSize');
+        for(let i = 0; i < number; i += 1){
             const line = document.createElement('div');
             line.classList.add('line');
-            board.appendChild(line);
+            container.appendChild(line);
     
-    
-            for(let i = 0; i < storedSize; i +=1){
-                const pixel = document.createElement('div');
-                pixel.classList.add('pixel');
-                line.appendChild(pixel);
-            }
-        }
-    }
-
-
-
-        const pixel = document.querySelectorAll('.pixel');
-        console.log(pixel.length);
-
-        for(let i = 0; i < pixel.length; i += 1){
-            pixel[i].style.color = 'red';
             if(localStorage.getItem('pixelBoard') === null){
-                pixel[i].style.backgroundColor = 'white';
-            } else{
-                const storedPalette = JSON.parse(localStorage.getItem('pixelBoard'));
-                if(storedPalette[i] === undefined || storedPalette[i] === null){
-                    pixel[i].style.backgroundColor = 'white';
-                } else{
-                    pixel[i].style.backgroundColor = storedPalette[i];
+                for(let i = 0; i < number; i +=1){
+                    const pixel = document.createElement('div');
+                    pixel.classList.add('pixel');
+                    pixel.style.backgroundColor = 'white';
+                    line.appendChild(pixel);
                 }
+            } else {
+                let storedPixelBoard = JSON.stringify(localStorage.getItem('pixelBoard'));
+                for(let i = 0; i < number; i +=1){
+                    const pixel = document.createElement('div');
+                    pixel.classList.add('pixel');
+                    pixel.style.backgroundColor = 'white';
 
-            }
-        }
+                    if(storedPixelBoard[i] === '' || storedPixelBoard[i] === undefined){
+                        pixel.style.backgroundColor = 'white';
+                    } else{
+                        pixel.style.backgroundColor = storedPixelBoard[i];
+                    }
 
-    }
-
-
-
-
-
-function colorSelection(){
-
-    const pixel = document.querySelectorAll('.pixel');
-    const palette = document.querySelectorAll('.color');
-    let selectedColor = 'black';
-
-    palette[0].classList.add('selected');
-
-    for(let i = 0; i < palette.length; i += 1){
-
-// ADICIONA E REMOVE CLASSE SELECTED
-        palette[i].addEventListener('click', event => {
-        if(!palette[i].classList.contains('selected')){
-            for(let j = 0; j < palette.length; j += 1){
-                if(palette[j].classList.contains('selected')){
-                    palette[j].classList.remove('selected');
+                    line.appendChild(pixel);
                 }
             }
-            palette[i].classList.add('selected');
+
+
         }
-        selectedColor = palette[i].style.backgroundColor;
-        })
     }
 
 
-// APLICA A COR SELECIONADA AO PIXEL E SALVA OS PIXELS
 
-let pixelSaving = [];
-
-    for(let i = 0; i < pixel.length; i += 1){
-
-        pixel[i].addEventListener('click', event => {
-            event.target.style.backgroundColor = selectedColor;
-
-
-            let boardItem = document.querySelectorAll('.pixel')
-            boardItem.forEach(pixel => {
-                pixelSaving.push(pixel.style.backgroundColor);
-
-
-            })
-            localStorage.setItem('pixelBoard', JSON.stringify(pixelSaving));
-            pixelSaving = [];
-        })
-
-    }
 
 }
 
-function clearBoard(){
+const selectColorFromPalette = () => {
+    const colors = document.querySelectorAll('.color');
+    for(let i = 0; i < colors.length; i += 1){
+        colors[i].addEventListener('click', event => {
+            if(!event.target.classList.contains('selected')){
+                for(let j = 0; j < colors.length; j += 1){
+                    if(colors[j].classList.contains('selected')){
+                        colors[j].classList.remove('selected');
+                    }
+                }
+                event.target.classList.add('selected');
+            }
+        })
+    }
+}
 
-    const clearButton = document.querySelector('#clear-board');
+const paintPixelBoard = () => {
     const pixels = document.querySelectorAll('.pixel');
-    const lines = document.querySelectorAll('.line');
-    
-    clearButton.addEventListener('click', event => {
+    for(let i = 0; i < pixels.length; i += 1){
+        pixels[i].addEventListener('click', event => {
+            let selectedColor = document.querySelector('.selected');
+            event.target.style.backgroundColor = selectedColor.style.backgroundColor;
+            savePainting(pixels);
+        })
+    }
+
+    buttonClearBoard.addEventListener('click', event => {
         for(let i = 0; i < pixels.length; i += 1){
             pixels[i].style.backgroundColor = 'white';
+            localStorage.removeItem('pixelBoard');
         }
-
-        for(let i = 0; i < lines.length; i += 1){
-            lines[i].style.backgroundColor = 'white';
-        }
-
-        localStorage.removeItem('pixelBoard');
-
     })
-
 }
 
-function boardSize(){
-    generateBoardBtn.addEventListener('click', event => {
 
-        let parameter = input.value;
-
-        if(input.value === null || input.value === ''){
-            alert('Board inválido!');
-        } else if(input.value > 50){
-            parameter = 50;
-            newPixelBoard(parameter);
-        } else if(input.value < 5){
-            parameter = 5;
-            newPixelBoard(parameter);
-        } else{
-            newPixelBoard(parameter);
-        }
-
-})
-
+const savePainting = item => {
+    const pixelColorArray = [];
+    for(let i = 0; i < item.length; i += 1){
+        pixelColorArray.push(item[i].style.backgroundColor);
+    }
+    localStorage.setItem('pixelBoard', JSON.stringify(pixelColorArray));
 }
 
-function newPixelBoard(parametro){
-    pixelBoard.innerHTML = '';
+const recoverPainting = () => {
 
-    for(let i = 0; i < parametro; i += 1){
-        const line = document.createElement('div');
-        line.classList.add('line');
-        pixelBoard.appendChild(line);
+    const recoveredPixelBoard = JSON.parse(localStorage.getItem('pixelBoard'));
+    const pixels = document.querySelectorAll('.pixel');
 
-        for(let i = 0; i < parametro; i +=1){
-            const pixel = document.createElement('div');
-            pixel.classList.add('pixel');
-            line.appendChild(pixel);
+    if(localStorage.getItem('pixelBoard') !== null){
+        for(let i = 0; i < pixels.length; i += 1){
+            pixels[i].style.backgroundColor = recoveredPixelBoard[i];
+    
         }
     }
 
 
-let pixels = document.querySelectorAll('.pixel');
-for(let i = 0; i < pixels.length; i += 1){
-    if(localStorage.getItem('pixelBoard') === null){
-        pixels[i].style.backgroundColor = 'white';
-    } else{
-        let storedBoard = JSON.parse(localStorage.getItem('pixelBoard'));
-
-        if(storedBoard[i] === null || storedBoard[i] === undefined){
-            pixels[i].style.backgroundColor = 'white';
-        } else{
-            pixels[i].style.backgroundColor = storedBoard[i];
-        }
-    }
 }
 
-localStorage.setItem('boardSize', parametro);
-colorSelection();
+const createLinesAndColums = (color, number, container) => {
+
 }
