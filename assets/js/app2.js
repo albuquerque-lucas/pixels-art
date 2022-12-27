@@ -11,6 +11,7 @@ window.onload = () => {
     createPalette(colorPalette, 4);
     createPixelBoard(pixelBoard, 5);
     paintPixelBoard();
+    recoverPainting();
 
     buttonRandomColor.addEventListener('click', event => {
         const colors = document.querySelectorAll('.color');
@@ -158,12 +159,48 @@ const paintPixelBoard = () => {
         pixels[i].addEventListener('click', event => {
             let selectedColor = document.querySelector('.selected');
             event.target.style.backgroundColor = selectedColor.style.backgroundColor;
+            savePainting(pixels);
         })
     }
 
     buttonClearBoard.addEventListener('click', event => {
         for(let i = 0; i < pixels.length; i += 1){
             pixels[i].style.backgroundColor = 'white';
+            localStorage.removeItem('pixelBoard');
         }
+
+
     })
+
+
+
+
+}
+
+
+const savePainting = item => {
+
+    const pixelColorArray = [];
+
+    for(let i = 0; i < item.length; i += 1){
+        pixelColorArray.push(item[i].style.backgroundColor);
+
+    }
+    localStorage.setItem('pixelBoard', JSON.stringify(pixelColorArray));
+
+}
+
+const recoverPainting = () => {
+
+    let recoveredPixelBoard = JSON.parse(localStorage.getItem('pixelBoard'));
+    const pixels = document.querySelectorAll('.pixel');
+
+    if(localStorage.getItem('pixelBoard') !== null){
+        for(let i = 0; i < pixels.length; i += 1){
+            pixels[i].style.backgroundColor = recoveredPixelBoard[i];
+    
+        }
+    }
+
+
 }
