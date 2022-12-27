@@ -13,7 +13,7 @@ for(let i = 0; i < 4; i += 1){
 createPalette();
 fetchColors();
 triggerColorButton();
-generateBoard();
+createBoard();
 colorSelection();
 boardSize();
 clearBoard();
@@ -89,7 +89,7 @@ function fetchColors (){
     }
 }
 
-function generateBoard(){
+function createBoard(){
 
     const board = document.getElementById('pixel-board');
 
@@ -125,15 +125,15 @@ function generateBoard(){
 
 
         const pixel = document.querySelectorAll('.pixel');
+        console.log(pixel.length);
 
         for(let i = 0; i < pixel.length; i += 1){
+            pixel[i].style.color = 'red';
             if(localStorage.getItem('pixelBoard') === null){
-
                 pixel[i].style.backgroundColor = 'white';
-
             } else{
                 const storedPalette = JSON.parse(localStorage.getItem('pixelBoard'));
-                if(storedPalette[i] === null){
+                if(storedPalette[i] === undefined || storedPalette[i] === null){
                     pixel[i].style.backgroundColor = 'white';
                 } else{
                     pixel[i].style.backgroundColor = storedPalette[i];
@@ -260,16 +260,21 @@ let pixels = document.querySelectorAll('.pixel');
 
 for(let i = 0; i < pixels.length; i += 1){
 
-    pixels[i].style.backgroundColor = 'white';
+    if(localStorage.getItem('pixelBoard') === null){
+        pixels[i].style.backgroundColor = 'white';
+    } else{
+        let storedBoard = JSON.parse(localStorage.getItem('pixelBoard'));
+
+        if(storedBoard[i] === null || storedBoard[i] === undefined){
+            pixels[i].style.backgroundColor = 'white';
+        } else{
+            pixels[i].style.backgroundColor = storedBoard[i];
+        }
+    }
+
 
 
 }
-
-// pixels.forEach(pixel => {
-//         pixel.style.backgroundColor = 'white';
-    
-
-// })
 
 localStorage.setItem('boardSize', parametro);
 colorSelection();
