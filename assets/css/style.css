@@ -14,7 +14,6 @@ header {
   padding: 1rem 0.5rem 4rem;
   border-bottom: 2px solid white;
   border-radius: 15px;
-  transition: 0.1s ease-out;
 }
 header h1 {
   text-align: center;
@@ -42,11 +41,6 @@ header .list-container ul .color {
   border: 1px solid black;
   border-radius: 25px;
   cursor: pointer;
-  transition: 0.1s ease-in-out;
-}
-header .list-container ul .color:hover {
-  box-shadow: 0 0 2px white;
-  transform: scale(1.075);
 }
 header #input-section {
   display: flex;
@@ -58,7 +52,6 @@ header #input-section button {
   background: rgb(44, 47, 51);
   border: 2px solid rgb(255, 255, 255);
   border-radius: 30px;
-  transition: 0.1s ease-out;
   font-weight: 800;
   cursor: pointer;
 }
